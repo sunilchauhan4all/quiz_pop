@@ -7,7 +7,7 @@
 html,
 body {
   margin: 0px;
-  
+  color: black;
   background-color: #F7F7F7;
 }
 
@@ -42,28 +42,46 @@ nav .score{
   display: flex;
   flex-direction: row;
   align-items:center;
-  padding: 8px;
+
   padding-right: 50px;
   color: #0000CD;
   font-weight: bold;
   
 }
-.question-container{
-  margin-top: 30px;
-  width: 100%;
-  height: 400px;
+nav ul{
   display: flex;
+  list-style: none;
+}
+nav ul li{
+  background-color: black;
+  margin-left: 15px;
+  color: white;
+  padding: 5px;
+  
+}
+nav ul li:hover{
+  background-color: cornflowerblue;
+  border: #14248B bold ;
+}
+.quiz-container{
+  margin-top: 50px;
+  width: 100%;
+  height: 450px;
+  display: flex ;
   justify-content: center;
   align-items: center;
   
 }
 .question-box{
+  margin: auto;
   width: 60%;
+  border: 2px solid grey;
+  padding: 10px;
   height: 400px;
   background-color: white;
   border-radius: 5px;
   font-weight: lighter;
-  padding: 5px;
+ 
 }
 .question-box h2{
   font-weight: lighter;
@@ -78,34 +96,55 @@ nav .score{
   padding: 20px;
   font-size: 20px;
 }
-.topics{
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  grid-gap:60px;
-  margin-top: 150px;
+.buttons{
+  padding: 10px;
+}
+.button-container{
+    margin-top: 150px;
   padding: 20px;
   
   
   
+  
+  
+}
+.button-container +div{
+  display: inline-block;
 }
 .hide{
   display: none;
 }
 .topic-box{
   background-color: black;
+  display: inline-block;
+
   height: 50px;
+  width: 20%;
   text-align: center;
   padding: 20px;
   font-size: 30px;
   color: white;
-}
-.box{
-  padding: 20px;
-  margin-right: 10px;
   
-  height: 100px;
-  width: 100px;
+  
 }
+.topic-box:hover{
+  background-color: cornflowerblue;
+}
+
 #main-page{
   margin:30px;
+}
+#scoreboard h2{
+  background-color: #D9EDFD;
+  color: #14248B;
+  font-weight:400;
+}
+#scoreboard{
+  text-align: center;
+}
+.score_list {
+  font-size: 20px;
+  font-weight: 500px;
+  color: cornflowerblue;
+  
 }

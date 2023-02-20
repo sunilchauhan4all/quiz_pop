@@ -1,8 +1,17 @@
 
+import state from "./state.js";
+window.onload=function(){
+  document.getElementById("show_questions").style.display='none';
+  document.getElementById("scoreboard").style.display='none';
+  
+
+}
+
 var highScoreArray = JSON.parse(localStorage.getItem("highScoreArray")) || [];//Question bank
 var userName="sunil";
 
 let subjList = [];
+let count=0;
 
 var questionBank=
     {
@@ -236,7 +245,7 @@ var option2= document.getElementById('option2');
 var option3= document.getElementById('option3');
 var next= document.querySelector('.next');
 var pre= document.querySelector('.pre');
-var points= document.getElementById('score');
+var points= document.getElementById('score_list');
 var span= document.querySelectorAll('span');
 var i=0;
 var score= 0;
@@ -245,7 +254,7 @@ let selectedSubject;
 let allSubj = {};
 
 //function to display questions
-function displayQuestion(){
+window.displayQuestion=function(){
     for(var a=0;a<span.length;a++){
         span[a].style.background='none';
     }
@@ -257,7 +266,7 @@ function displayQuestion(){
     option3.innerHTML= subjList[i]?.options[3];
     stat.innerHTML= "Question"+' '+(i+1)+' '+'of'+' '+subjList?.length;
 }
-function storeScore(newScore) {
+window.storeScore=function(newScore) {
     if(localStorage){
         localStorage.clear();
         localStorage.setItem("newHighScoreAdded", JSON.stringify({ userName, newScore }));
@@ -266,45 +275,48 @@ function storeScore(newScore) {
 }
 
 //function to calculate scores
-function calcScore(e){
+window.calcScore=function(e){
     
-    if(e.innerHTML===subjList[i]?.answer && score<subjList?.length)
+    if(e.innerHTML===subjList[i]?.answer && score<=30)
     {
         score= score+1;
-        document.getElementById(e.id).style.background= 'limegreen';
+        state.count+=1;
+        console.log("total score",state.count);
+        document.getElementById(e.id).style.background= 'blue';
         storeScore(score);
         
     }
     else{
-        document.getElementById(e.id).style.background= 'tomato';
+        document.getElementById(e.id).style.background= 'blue';
        
     }
     setTimeout(nextQuestion,300);
 }
 
 //function to display next question
-function nextQuestion(){
+window.nextQuestion=function(){
     if(i<subjList?.length-1)
     {
         i=i+1;
         displayQuestion();
     }
     else{
-        points.innerHTML= score+ '/'+ subjList?.length;
-        quizContainer.style.display= 'none';
-        scoreboard.style.display= 'block';
+      // showSubject();
+        // points.innerHTML= score+ '/'+ subjList?.length;
+        // quizContainer.style.display= 'none';
+        // scoreboard.style.display= 'block';
     }
 }
-function preQuestion(){
-    if(i<subjList?.length-1 && i >= 1)
+window.preQuestion=function(){
+    if(i<=subjList?.length-1)
     {
         i=i-1;
         displayQuestion();
     }
     else{
-        points.innerHTML= score+ '/'+ subjList?.length;
-        quizContainer.style.display= 'none';
-        scoreboard.style.display= 'block'
+        // points.innerHTML= score+ '/'+ subjList?.length;
+        // quizContainer.style.display= 'none';
+        // scoreboard.style.display= 'block'
     }
 }
 
@@ -319,7 +331,7 @@ function backToQuiz(){
 }
 
 //function to check Answers
-function checkAnswer(){
+window.checkAnswer=function(){
     var answerBank= document.getElementById('answerBank');
     var answers= document.getElementById('answers');
     answerBank.style.display= 'block';
@@ -334,17 +346,17 @@ function checkAnswer(){
 
 
 // displayQuestion();
-function show_questions(){
+window.show_questions=function(){
   var x = document.getElementById("show_question");
   
     x.style.display = "none";
  
 }
-function showBlock(){
+window.showBlock=function(){
   document.getElementById("show_questions").style.display = "none";
 }
 
-function showSubject(){
+window.showSubject=function(){
   var x = document.getElementById("button-container");
   if (x.style.display === "none") {
     x.style.display = "block";
@@ -353,8 +365,25 @@ function showSubject(){
   }
 
 }
- const selectSubject =  (event,subj) => {
+window.displayShow=function (){
+  var x = document.getElementById("show_questions");
+  
+  if (x.style.display === "none") {
+    x.style.display = "block";
+    
+
+  } else {
+    x.style.display = "none";
+    
+  }
+  showSubject();
+  
+}
+ window.selectSubject =  (event,subj) => {
+    i=0; // to set default position of first question for every subject;
     event.preventDefault();
+    document.getElementById("show_questions").style.display='block';
+    
     console.log(subj);
     showSubject();
     if(subj === "music"){
@@ -376,6 +405,22 @@ function showSubject(){
 
     }
     console.log(subjList);
+}
+window.scoreShow=function (){
+  document.getElementById("button-container").style.display='none';
+  document.getElementById("show_questions").style.display='none';
+  
+  document.getElementById('score_list').innerHTML= 'Candidate Score'+" "+state.count+ '/'+ '30';
+  var x = document.getElementById("scoreboard");
+  
+  if (x.style.display === "none") {
+    x.style.display = "block";  
+  } else {
+    x.style.display = "none";
+    
+  }
+  
+  
 }
 
 //let sub = document.getElementById("subjectQues").onclick= selectSubject("music");
